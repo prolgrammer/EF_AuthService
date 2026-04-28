@@ -1,0 +1,27 @@
+# Binaries
+/bin/
+/dist/
+*.exe
+*.test
+*.out
+
+# Local env / secrets
+.env
+.env.local
+*.pem
+keys/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage.out
+coverage.html
+
+# Build cache
+/.cache/

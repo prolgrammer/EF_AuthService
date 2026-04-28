@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package eventflow.auth.v1;
+
+option go_package = "github.com/eventflow/auth-service/pkg/pb/auth/v1;authv1";
+
+import "google/protobuf/timestamp.proto";
+
+service Auth {
+  rpc Login(LoginRequest) returns (TokenPair);
+  rpc Refresh(RefreshRequest) returns (TokenPair);
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc JWKS(JWKSRequest) returns (JWKSResponse);
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message RefreshRequest {
+  string refresh_token = 1;
+}
+
+message TokenPair {
+  string access_token = 1;
+  string refresh_token = 2;
+  int32 access_ttl_seconds = 3;
+  int32 refresh_ttl_seconds = 4;
+}
+
+message ValidateTokenRequest {
+  string access_token = 1;
+}
+
+message ValidateTokenResponse {
+  bool valid = 1;
+  string user_id = 2;
+  google.protobuf.Timestamp expires_at = 3;
+  repeated string scopes = 4;
+}
+
+message JWKSRequest {}
+
+message JWKSResponse {
+  repeated JWK keys = 1;
+}
+
+message JWK {
+  string kty = 1;
+  string use = 2;
+  string alg = 3;
+  string kid = 4;
+  string n = 5;
+  string e = 6;
+}
